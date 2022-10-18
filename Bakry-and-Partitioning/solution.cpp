@@ -22,11 +22,9 @@ vvi g;
 vll xor_val, dp;
 
 // dfs for calculating xor values of each subtree
-void dfs_xor(int par, int anc = -1)
-{
+void dfs_xor(int par, int anc = -1) {
     xor_val[par] = a[par];
-    for(int e: g[par])
-    {
+    for(int e: g[par]) {
         if(e == anc) continue;
         dfs_xor(e, par);
         xor_val[par] ^= xor_val[e];
@@ -36,10 +34,8 @@ void dfs_xor(int par, int anc = -1)
 int pos;
 
 // dfs for finding answer
-void dfs(int par, int anc = -1)
-{
-    for(int e: g[par])
-    {
+void dfs(int par, int anc = -1) {
+    for(int e: g[par]) {
         if(e == anc) continue;
         dfs(e, par);
         dp[par] += dp[e];
@@ -47,24 +43,21 @@ void dfs(int par, int anc = -1)
 
     if(dp[par] > 1) pos = 1;
 
-    if(par && xor_val[par] == xor_val[0])
-    {
+    if(par && xor_val[par] == xor_val[0]) {
         dp[par]++;
     }
 
     if(!xor_val[par] && dp[par]) pos = 1;
 }
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
     int test_cases;
     cin>>test_cases;
     
-    while(test_cases--)
-    {
+    while(test_cases--) {
             
         cin>>n>>k;
         
@@ -75,8 +68,7 @@ int main()
 
         g.assign(n, {});
 
-        for(ll i =0 ;i < n - 1;i++)
-        {   
+        for(ll i =0 ;i < n - 1;i++) {   
             int x, y;
             cin>>x>>y;
             x--; y--;
@@ -89,14 +81,12 @@ int main()
         dfs_xor(0);
 
         // if xor of root is zero, then answer would be "YES"
-        if(!xor_val[0])
-        {
+        if(!xor_val[0]) {
             cout<<"YES\n";
             continue;
         }
 
-        if(k == 1)
-        {
+        if(k == 1) {
             cout<<"NO\n";
             continue;
         }
@@ -107,12 +97,10 @@ int main()
         dp.assign(n, 0);
         dfs(0);
 
-        if(pos)
-        {
+        if(pos) {
             cout<<"YES\n";
         }
-        else
-        {
+        else {
             cout<<"NO\n";
         }
     }
